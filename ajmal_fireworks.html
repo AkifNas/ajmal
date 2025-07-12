@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Good Luck, Ajmal Atiqullah!</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #ffffff;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      max-width: 700px;
+      margin: 100px auto;
+      text-align: center;
+      color: #0d47a1;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #01579b;
+    }
+
+    p {
+      font-size: 1.5em;
+      margin: 10px 0;
+    }
+
+    .emoji {
+      font-size: 2.5em;
+    }
+
+    .note {
+      background: #e3f2fd;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 30px;
+      color: #0d47a1;
+      font-size: 1.3em;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="fireworks"></canvas>
+
+  <div class="card">
+    <div class="emoji">📘🎓✨</div>
+    <h1>Good Luck, Ajmal Atiqullah!</h1>
+    <p>Final Exam Time! Stay focused, stay strong 💪</p>
+    <div class="emoji">🧠📖☕</div>
+
+    <div class="note">
+      <p><strong>Good luck Abg Long final exam!</strong></p>
+      <p>Semoga dipermudahkan segala urusan.</p>
+      <p>Abah, Umi, semua doakan Abg Long berjaya dalam semua subject.</p>
+      <p><strong>All the best! 💙</strong></p>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('fireworks');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const particles = [];
+
+    function createFirework() {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height / 2;
+      const color = hsl(${Math.random() * 360}, 100%, 60%);
+      for (let i = 0; i < 50; i++) {
+        particles.push({
+          x,
+          y,
+          radius: Math.random() * 2 + 1,
+          speedX: (Math.random() - 0.5) * 8,
+          speedY: (Math.random() - 0.5) * 8,
+          color,
+          life: 100
+        });
+      }
+    }
+
+    function updateParticles() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.speedX;
+        p.y += p.speedY;
+        p.life--;
+        if (p.life <= 0) {
+          particles.splice(i, 1);
+          continue;
+        }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      }
+    }
+
+    function animate() {
+      updateParticles();
+      requestAnimationFrame(animate);
+    }
+
+    setInterval(createFirework, 800);
+    animate();
+  </script>
+</body>
+</html>
